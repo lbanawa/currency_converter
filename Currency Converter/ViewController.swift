@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         // 3) Parsing & JSON Serialization
         
        // 1)
+        // since url is http (not secure) -- go into Info.plist, add App Transport Security Settings, then add Allow Arbitrary Loads and change the NO to YES
         let url = URL(string: "http://data.fixer.io/api/latest?access_key=8276b2059e608cf3a1e5f676268b3984")
         
         // create a session -- urlsession gets the data and manages transferring tasks with data in a specified network
@@ -50,10 +51,27 @@ class ViewController: UIViewController {
                 // if you do have data then go ahead and present the data
                 if data != nil {
                     
+                    do {
+                    // convert the JSON format into strings, booleans, integers and/ or doubles
+                    // mutableContainers allows us to work with arrays and dictionaries
+                    let jsonResponse  = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                        
+                        // ASYNC -- means does not have to be synchronized, can do multiple things at once
+                        DispatchQueue.main.async {
+                            print(jsonResponse)
+                        }
+                        
+                        
+                    } catch {
+                        print("error")
+                    }
                     
                 }
             }
         }
+        
+        // use .resume to start the task after we create it
+        task.resume()
         
     }
     
