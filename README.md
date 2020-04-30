@@ -1,3 +1,3 @@
 # currency_converter
  
-### Internet active iOS currency converterapp using fixer.io API.
+### Internet active iOS currency converter app using fixer.io API.
