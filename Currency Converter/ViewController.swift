@@ -54,11 +54,39 @@ class ViewController: UIViewController {
                     do {
                     // convert the JSON format into strings, booleans, integers and/ or doubles
                     // mutableContainers allows us to work with arrays and dictionaries
-                    let jsonResponse  = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                    let jsonResponse  = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! Dictionary<String, Any> // <String, Any> is the format that the data is in, EX: "USD": 1.005
                         
                         // ASYNC -- means does not have to be synchronized, can do multiple things at once
+                        // need a dictionary format to be able to get any piece of data from the dictionary
+                            // this is why jsonResponse is force casted as a Dictionary
                         DispatchQueue.main.async {
-                            print(jsonResponse)
+                            if let rates = jsonResponse["rates"] as? [String : Any] {
+                                
+                                if let cad = rates["CAD"] as? Double {
+                                    self.cadLabel.text  = "CAD: \(cad)"
+                                }
+                                
+                                if let chf = rates["CHF"] as? Double {
+                                    self.chfLabel.text  = "CHF: \(chf)"
+                                }
+                                
+                                if let gbp = rates["GBP"] as? Double {
+                                    self.gbpLabel.text  = "GBP: \(gbp)"
+                                }
+                                
+                                if let jpy = rates["JPY"] as? Double {
+                                    self.jpyLabel.text  = "JPY: \(jpy)"
+                                }
+                                
+                                if let usd = rates["USD"] as? Double {
+                                    self.usdLabel.text  = "USD: \(usd)"
+                                }
+                                
+                                if let Turkish = rates["TRY"] as? Double {
+                                    self.tryLabel.text  = "TRY: \(Turkish)"
+                                }
+                                
+                            }
                         }
                         
                         
